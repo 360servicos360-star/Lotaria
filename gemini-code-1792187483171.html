@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Palpites - Lotaria Nacional</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #1b4332;
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .options {
+            margin: 20px 0;
+        }
+        select, button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
+        button {
+            background-color: #2d6a4f;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #1b4332;
+        }
+        .balls-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .ball {
+            width: 45px;
+            height: 45px;
+            background-color: #d8f3dc;
+            color: #1b4332;
+            border: 2px solid #52b788;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .disclaimer {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: #999;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Gerador Loto 5/90</h1>
+    <p>Gere palpites equilibrados para as tuas apostas na Lotaria Nacional.</p>
+
+    <div class="options">
+        <label for="qtd">Quantidade de números:</label>
+        <select id="qtd">
+            <option value="2">2 Números (Opção 2)</option>
+            <option value="3">3 Números (Opção 3)</option>
+            <option value="4">4 Números (Opção 4)</option>
+            <option value="5" selected>5 Números (Opção 5)</option>
+        </select>
+        <button onclick="gerarPalpite()">Gerar Palpite</button>
+    </div>
+
+    <div class="balls-container" id="resultado">
+        <!-- Números aparecem aqui -->
+    </div>
+
+    <div class="disclaimer">
+        Este site é um gerador aleatório de palpites. Jogos de sorte dependem do acaso. Jogue com responsabilidade.
+    </div>
+</div>
+
+<script>
+    function gerarPalpite() {
+        const qtd = parseInt(document.getElementById('qtd').value);
+        const numeros = new Set();
+
+        // Gera números únicos de 1 a 90
+        while (numeros.size < qtd) {
+            const num = Math.floor(Math.random() * 90) + 1;
+            numeros.add(num);
+        }
+
+        // Ordena os números em ordem crescente
+        const numerosOrdenados = Array.from(numeros).sort((a, b) => a - b);
+
+        // Exibe na tela
+        const container = document.getElementById('resultado');
+        container.innerHTML = '';
+        
+        numerosOrdenados.forEach(num => {
+            const ball = document.createElement('div');
+            ball.className = 'ball';
+            ball.textContent = num < 10 ? '0' + num : num;
+            container.appendChild(ball);
+        });
+    }
+
+    // Gerar um palpite ao carregar a página
+    gerarPalpite();
+</script>
+
+</body>
+</html>
